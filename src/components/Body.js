@@ -1,9 +1,12 @@
 import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+// import { withPromotedLabel } from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmerr";
 import { Link } from "react-router-dom";
 import { DATA_API } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
+
 
 const Body = () => {
     // Local State Variable - Super powerful variable
@@ -12,6 +15,10 @@ const Body = () => {
     const [filteredRestaurant, setFilteredRestaurant] = useState([]);
 
     const [searchText, setSearchText] = useState("");
+
+    //  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+
+
 
     useEffect(() => {
         fetchData();
@@ -40,13 +47,14 @@ const Body = () => {
             </h1>
         );
 
+    const { loggedInUser, setUserName } = useContext(UserContext);
 
     // Ternary operator
     return !listOfRestaurants || listOfRestaurants.length === 0 ? <Shimmer /> : (
         <div className="body">
             <div className="filter flex">
                 <div className="search m-4 p-4">
-                    <input type="text" className="border border-solid border-black"
+                    <input type="text" placeholder="Search" className="border border-solid border-black"
                         value={searchText} onChange={(e) => {
                             setSearchText(e.target.value);
                         }} />
@@ -73,14 +81,22 @@ const Body = () => {
                         Rated 4+
                     </button>
                 </div>
+                <div className="search m-4 p-4 flex items-center">
+                    <label>UserName : </label>
+                    <input className="border border-black p-2"
+                        value={loggedInUser}
+                        onChange={(e) => setUserName(e.target.value)} />
+                </div>
             </div>
             <div className="flex flex-wrap">
-                {filteredRestaurant.map((restaurants) => (
+                {filteredRestaurant.map((restaurant) => (
                     <Link
-                        key={restaurants?.info?.id}
-                        to={"/restaurants/" + restaurants?.info?.id}
+                        key={restaurant?.info?.id}
+                        to={"/restaurants/" + restaurant?.info?.id}
                     >
-                        <RestaurantCard resData={restaurants} />
+                        {/* {restaurant.data.promoted ? (<RestaurantCardPromoted resData={restaurant} />) : (<RestaurantCard resData={restaurant} />)} */}
+                        <RestaurantCard resData={restaurant} />
+
                     </Link>
                 ))
                 }

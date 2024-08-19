@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 //Suspense is a component given by react (starts with the capital letter) rap component of grocery in <Suspense></Suspense> for execution
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
@@ -9,6 +9,7 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenuPage";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Shimmer from "./components/Shimmerr";
+import UserContext from "./utils/UserContext";
 // import Grocery from "./components/Grocery";
 
 
@@ -26,12 +27,26 @@ const About = lazy(() => import("./components/About"))
 const Contact = lazy(() => import("./components/Contact"))
 
 const AppLayout = () => {
+
+    const [username, setUserName] = useState();
+
+    //Authentication
+    useEffect(() => {
+        // Make an API call and send username and password
+        const data = {
+            name: "Abhishek",
+        };
+        setUserName(data.name);
+    }, []);
+
     return (
-        <div className="app">
-            <Header />
-            {/* Outlet will be replace by the path */}
-            <Outlet />
-        </div>
+        <UserContext.Provider value={{ loggedInUser: username, setUserName }}>
+            <div className="app">
+                <Header />
+                {/* Outlet will be replace by the path */}
+                <Outlet />
+            </div >
+        </UserContext.Provider >
     );
 };
 

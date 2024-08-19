@@ -30,5 +30,18 @@ const RestaurantCard = (props) => {
 // Input as RestaurantCard and output will be RestaurantCardPromoted
 
 
+// ************** Not using promoted label bcz in our API we don't have promoted data
+// export const withPromotedLabel = (RestaurantCard) => {
+//return a new component 
+//     return (props) => {
+//         return (
+//             <div>
+//                 <label>Promoted</label>
+//                 <RestaurantCard {...props} />
+//             </div>
+//         )
+
+//     }
+// }
 
 export default RestaurantCard;
