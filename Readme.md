@@ -1,3 +1,7 @@
+need to add CORS extention to the browser to access this project
+
+
+ 
 # Redux Toolkit
 
 - Install @reduxjs/toolkit and react-redux
