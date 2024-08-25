@@ -1,4 +1,4 @@
-need to add CORS extention to the browser to access this project
+need to add CORS extention and Allow (ON) to the browser to access this project
 
 
  
