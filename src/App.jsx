@@ -10,6 +10,9 @@ import RestaurantMenu from "./components/RestaurantMenuPage";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Shimmer from "./components/Shimmerr";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 // import Grocery from "./components/Grocery";
 
 
@@ -40,13 +43,15 @@ const AppLayout = () => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ loggedInUser: username, setUserName }}>
-            <div className="app">
-                <Header />
-                {/* Outlet will be replace by the path */}
-                <Outlet />
-            </div >
-        </UserContext.Provider >
+        <Provider store={appStore}>
+            <UserContext.Provider value={{ loggedInUser: username, setUserName }}>
+                <div className="app">
+                    <Header />
+                    {/* Outlet will be replace by the path */}
+                    <Outlet />
+                </div >
+            </UserContext.Provider >
+        </Provider>
     );
 };
 
@@ -71,6 +76,11 @@ const appRouter = createBrowserRouter([
                 path: "/grocery",
                 element: <Suspense fallback={<Shimmer />} > <Grocery /> </Suspense>,
                 // grocery is not available at the moment thats why we put Suspense component given bt react.. fallback={} is like a placeholder
+            },
+            {
+                path: "/cart",
+                element: <Suspense fallback={<Shimmer />} >  <Cart /> </Suspense>,
+
             },
             {
                 path: "/restaurants/:resId",
